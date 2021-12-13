@@ -40,7 +40,7 @@ def cmd_proc(processes):
     process_count = int(input("\nInput number of processes: "))
 
     for i in range(process_count):
-        processes.append(int(input(f"P{i + 1} Burst Time: ")))
+        processes.append([i + 1, int(input(f"P{i + 1} Burst Time: "))])
 
     cmd_disproc(processes)
 
@@ -48,7 +48,7 @@ def cmd_proc(processes):
 def cmd_disproc(processes):
     print("\nProcess\t\tBurst Time")
     for i in range(len(processes)):
-        print(f"P{i+1}\t\t{processes[i]}")
+        print(f"P{processes[i][0]}\t\t{processes[i][1]}")
 
 
 def cmd_help():
