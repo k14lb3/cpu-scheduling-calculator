@@ -4,8 +4,8 @@ CMD_FCFS = "fcfs"
 CMD_SJF = "sjf"
 CMD_RR = "rr"
 CMD_PRIO = "prio"
-CMD_DISPROC = "disproc"
 CMD_PROC = "proc"
+CMD_DISPROC = "disproc"
 CMD_HELP = "help"
 CMD_CLEAR = "clear"
 COMMANDS = {
@@ -13,8 +13,8 @@ COMMANDS = {
     CMD_SJF: "Apply Shortest-Job-First Scheduling.",
     CMD_RR: "Apply Round Robin Scheduling.",
     CMD_PRIO: "Apply Priority Scheduling.",
-    CMD_DISPROC: "Display the processes.",
     CMD_PROC: "Input or replace current processes.",
+    CMD_DISPROC: "Display the processes.",
     CMD_HELP: "Display commands.",
     CMD_CLEAR: "Clears the terminal.",
 }
@@ -36,12 +36,6 @@ def cmd_fcfs(processes):
     pass
 
 
-def cmd_disproc(processes):
-    print("\nProcess\t\tBurst Time")
-    for i in range(len(processes)):
-        print(f"P{i+1}\t\t{processes[i]}")
-
-
 def cmd_proc(processes):
     process_count = int(input("\nInput number of processes: "))
 
@@ -49,6 +43,12 @@ def cmd_proc(processes):
         processes.append(int(input(f"P{i + 1} Burst Time: ")))
 
     cmd_disproc(processes)
+
+
+def cmd_disproc(processes):
+    print("\nProcess\t\tBurst Time")
+    for i in range(len(processes)):
+        print(f"P{i+1}\t\t{processes[i]}")
 
 
 def cmd_help():
@@ -86,6 +86,8 @@ def main():
                 cmd_prio(processes)
             else:
                 print("Input processes first!")
+        elif cmd == CMD_PROC:
+            cmd_proc(processes)
         elif cmd == CMD_DISPROC:
             if len(processes) != 0:
                 cmd_disproc(processes)
@@ -93,8 +95,6 @@ def main():
                 print("Input processes first!")
         elif cmd == CMD_HELP:
             cmd_help()
-        elif cmd == CMD_PROC:
-            cmd_proc(processes)
         elif cmd == CMD_CLEAR:
             os.system("cls" if os.name == "nt" else "clear")
         else:
