@@ -20,6 +20,46 @@ COMMANDS = {
 }
 
 
+def gen_gantt_chart(processes):
+
+    # Top Border
+    for i in range(len(processes)):
+        print(f"--{'-' if processes[i][0] < 10 else '--'}", end="")
+        for _ in range(processes[i][1]):
+            print("-", end="")
+        print("-", end="")
+    print("-")
+
+    # Process Number Labels
+    for i in range(len(processes)):
+        print(f"| P{processes[i][0]}", end="")
+        for _ in range(processes[i][1]):
+            print(" ", end="")
+    print("|")
+
+    # Bottom Border
+    for i in range(len(processes)):
+        print(f"--{'-' if processes[i][0] < 10 else '--'}", end="")
+        for _ in range(processes[i][1]):
+            print("-", end="")
+        print("-", end="")
+    print("-")
+
+    # Waiting Time Labels 
+    total_time = 0
+
+    print("0", end="")
+    for i in range(len(processes)):
+        total_time += processes[i][1]
+        print(f"  {' ' if processes[i][0] < 10 else '  '}", end="")
+        for j in range(processes[i][1]):
+            print(" ", end="")
+            if j == processes[i][1] - 1:
+                if total_time - processes[i - 1][1] > 9:
+                    print("\b", end="")
+                print(f"{total_time}", end="")
+
+
 def cmd_prio(processes):
     pass
 
@@ -33,7 +73,29 @@ def cmd_sjf(processes):
 
 
 def cmd_fcfs(processes):
-    pass
+    gen_gantt_chart(processes)
+
+    processes_fcfs = []
+
+    total_time = 0
+
+    processes_total_waiting_time = 0
+
+    for i in range(len(processes)):
+        processes_total_waiting_time += total_time
+
+        processes_fcfs.append([processes[i][0], total_time])
+
+        total_time += processes[i][1]
+
+    print("\n\nProcess\t\t\tWaiting Time")
+    for i in range(len(processes)):
+        print(f"P{processes_fcfs[i][0]}\t\t\t{processes_fcfs[i][1]}")
+
+    print(
+        f"\nAverage Waiting Time:\t{processes_total_waiting_time} / {len(processes_fcfs)} = {processes_total_waiting_time / len(processes_fcfs)}",
+        end="",
+    )
 
 
 def cmd_proc(processes):
