@@ -99,6 +99,8 @@ def cmd_fcfs(processes):
 
 
 def cmd_proc(processes):
+    processes.clear()    
+
     process_count = int(input("\nInput number of processes: "))
 
     for i in range(process_count):
