@@ -60,6 +60,22 @@ def gen_gantt_chart(processes):
                     print("\b", end="")
                 print(f"{total_time}", end="")
 
+def get_average_waiting_time(processes):
+
+    processes_total_waiting_time = 0
+
+    for i in range(len(processes)):
+        processes_total_waiting_time += processes[i][2]
+
+    print("\n\nProcess\t\tBurst Time\tWaiting Time")
+    for i in range(len(processes)):
+        print(f"P{processes[i][0]}\t\t{processes[i][1]}\t\t{processes[i][2]}")
+
+    print(
+        f"\nAverage Waiting Time:\t{processes_total_waiting_time} / {len(processes)} = {processes_total_waiting_time / len(processes)}",
+    )
+
+
 
 def cmd_prio(processes):
     pass
@@ -75,49 +91,24 @@ def cmd_sjf(processes):
 
     gen_gantt_chart(processes_sjf)
 
-    processes_total_waiting_time = 0
-
     for i in range(len(processes_sjf)):
         processes_sjf[i].append(
             processes_sjf[i - 1][1] + processes_sjf[i - 1][2] if i != 0 else 0
         )
     
-    for i in range(len(processes_sjf)):
-        processes_total_waiting_time += processes_sjf[i][2]
-
-    print("\n\nProcess\t\tBurst Time\tWaiting Time")
-    for i in range(len(processes_sjf)):
-        print(f"P{processes_sjf[i][0]}\t\t{processes_sjf[i][1]}\t\t{processes_sjf[i][2]}")
-
-    print(
-        f"\nAverage Waiting Time:\t{processes_total_waiting_time} / {len(processes_sjf)} = {processes_total_waiting_time / len(processes_sjf)}",
-        end="",
-    )
-
+    get_average_waiting_time(processes_sjf)
 
 def cmd_fcfs(processes):
-    processes_fcfs = processes
+    processes_fcfs = processes.copy()
 
-    gen_gantt_chart(processes)
-
-    processes_total_waiting_time = 0
+    gen_gantt_chart(processes_fcfs)
 
     for i in range(len(processes_fcfs)):
         processes_fcfs[i].append(
             processes_fcfs[i - 1][1] + processes_fcfs[i - 1][2] if i != 0 else 0
         )
-    
-    for i in range(len(processes_fcfs)):
-        processes_total_waiting_time += processes_fcfs[i][2]
 
-    print("\n\nProcess\t\tBurst Time\tWaiting Time")
-    for i in range(len(processes_fcfs)):
-        print(f"P{processes_fcfs[i][0]}\t\t{processes_fcfs[i][1]}\t\t{processes_fcfs[i][2]}")
-
-    print(
-        f"\nAverage Waiting Time:\t{processes_total_waiting_time} / {len(processes_fcfs)} = {processes_total_waiting_time / len(processes_fcfs)}",
-        end="",
-    )
+    get_average_waiting_time(processes_fcfs)
 
 
 def cmd_proc(processes):
@@ -186,6 +177,7 @@ def main():
         else:
             print(f"Command not found: {cmd}")
 
+        print(processes)
 
 if __name__ == "__main__":
     main()
