@@ -86,7 +86,7 @@ def cmd_sjf(processes):
         processes_total_waiting_time += processes_sjf[i][2]
 
     print("\n\nProcess\t\tBurst Time\tWaiting Time")
-    for i in range(len(processes)):
+    for i in range(len(processes_sjf)):
         print(f"P{processes_sjf[i][0]}\t\t{processes_sjf[i][1]}\t\t{processes_sjf[i][2]}")
 
     print(
@@ -111,7 +111,7 @@ def cmd_fcfs(processes):
         processes_total_waiting_time += processes_fcfs[i][2]
 
     print("\n\nProcess\t\tBurst Time\tWaiting Time")
-    for i in range(len(processes)):
+    for i in range(len(processes_fcfs)):
         print(f"P{processes_fcfs[i][0]}\t\t{processes_fcfs[i][1]}\t\t{processes_fcfs[i][2]}")
 
     print(
