@@ -96,24 +96,23 @@ def cmd_sjf(processes):
 
 
 def cmd_fcfs(processes):
+    processes_fcfs = processes
+
     gen_gantt_chart(processes)
-
-    processes_fcfs = []
-
-    total_time = 0
 
     processes_total_waiting_time = 0
 
+    for i in range(len(processes_fcfs)):
+        processes_fcfs[i].append(
+            processes_fcfs[i - 1][1] + processes_fcfs[i - 1][2] if i != 0 else 0
+        )
+    
+    for i in range(len(processes_fcfs)):
+        processes_total_waiting_time += processes_fcfs[i][2]
+
+    print("\n\nProcess\t\tBurst Time\tWaiting Time")
     for i in range(len(processes)):
-        processes_total_waiting_time += total_time
-
-        processes_fcfs.append([processes[i][0], total_time])
-
-        total_time += processes[i][1]
-
-    print("\n\nProcess\t\t\tWaiting Time")
-    for i in range(len(processes)):
-        print(f"P{processes_fcfs[i][0]}\t\t\t{processes_fcfs[i][1]}")
+        print(f"P{processes_fcfs[i][0]}\t\t{processes_fcfs[i][1]}\t\t{processes_fcfs[i][2]}")
 
     print(
         f"\nAverage Waiting Time:\t{processes_total_waiting_time} / {len(processes_fcfs)} = {processes_total_waiting_time / len(processes_fcfs)}",
