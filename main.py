@@ -1,5 +1,5 @@
 import os
-import operator
+import copy
 
 CMD_FCFS = "fcfs"
 CMD_SJF = "sjf"
@@ -60,8 +60,8 @@ def gen_gantt_chart(processes):
                     print("\b", end="")
                 print(f"{total_time}", end="")
 
-def get_average_waiting_time(processes):
 
+def get_average_waiting_time(processes):
     processes_total_waiting_time = 0
 
     for i in range(len(processes)):
@@ -76,7 +76,6 @@ def get_average_waiting_time(processes):
     )
 
 
-
 def cmd_prio(processes):
     pass
 
@@ -86,8 +85,9 @@ def cmd_rr(processes):
 
 
 def cmd_sjf(processes):
+    processes_sjf = copy.deepcopy(processes)
 
-    processes_sjf = sorted(processes, key=operator.itemgetter(1))
+    processes_sjf.sort(key= lambda p:p[1])
 
     gen_gantt_chart(processes_sjf)
 
@@ -95,11 +95,13 @@ def cmd_sjf(processes):
         processes_sjf[i].append(
             processes_sjf[i - 1][1] + processes_sjf[i - 1][2] if i != 0 else 0
         )
-    
+
     get_average_waiting_time(processes_sjf)
 
+
+
 def cmd_fcfs(processes):
-    processes_fcfs = processes.copy()
+    processes_fcfs = copy.deepcopy(processes)
 
     gen_gantt_chart(processes_fcfs)
 
@@ -176,8 +178,6 @@ def main():
             os.system("cls" if os.name == "nt" else "clear")
         else:
             print(f"Command not found: {cmd}")
-
-        print(processes)
 
 if __name__ == "__main__":
     main()
