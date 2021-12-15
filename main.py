@@ -1,4 +1,5 @@
 import os
+from math import ceil
 import copy
 
 CMD_FCFS = "fcfs"
@@ -113,7 +114,75 @@ def cmd_prio(processes):
 
 
 def cmd_rr(processes):
-    pass
+
+    processes_rr = copy.deepcopy(processes)
+    burst_times = [process[1] for process in processes_rr]
+    processes_rr_temp = []
+
+    time_quantum = 1
+
+    while True:
+        time_quantum = int(input(f"Time Quantum: "))
+
+        if time_quantum > 0:
+            break
+
+        print("Invalid input.")
+
+    # Gets the number of iterations by getting the
+    # largest burst time and dividing it to the given time quantum.
+    iterations = ceil(max(burst_times) / time_quantum)
+
+    for _ in range(iterations):
+        # Iterates through all the processes
+        for i in range(len(processes_rr)):
+            # Excludes the processes that already finished executing.
+            if burst_times[i] != 0:
+                if burst_times[i] >= time_quantum:
+                    burst_time = time_quantum
+                    burst_times[i] -= burst_time
+                else:
+                    burst_time = burst_times[i]
+                    burst_times[i] = 0
+
+                processes_rr_temp.append([processes_rr[i][0], burst_time])
+
+    gen_gantt_chart(processes_rr_temp)
+
+    for i in range(len(processes_rr_temp)):
+        processes_rr_temp[i].append(
+            processes_rr_temp[i - 1][1] + processes_rr_temp[i - 1][2] if i != 0 else 0
+        )
+
+    for i in range(len(processes_rr)):
+        waiting_time = 0
+        encounter = 0
+        process_prev = None
+        # Iterates through the created sequece
+        # which whill also be shown in the gantt chart
+        for j in range(len(processes_rr_temp)):
+            # Determines if the process that the cursor is currently in
+            # is the one that we are calculating the waiting time for.
+            if processes_rr_temp[j][0] == processes_rr[i][0]:
+                # Determines if the process is its first execution. 
+                if encounter != 0:
+                    # Gets the time gap between the n and n+1 process
+                    # Time gap = Current n process Waiting Time -
+                    #           (Previous n process Waiting Time +
+                    #           Previous n process Burst Time)
+                    waiting_time += processes_rr_temp[j][2] - (
+                        process_prev[1] + process_prev[2]
+                    )
+                else:
+                    waiting_time += processes_rr_temp[j][2]
+                    encounter += 1
+
+                process_prev = processes_rr_temp[j]
+
+        processes_rr[i].append(waiting_time)
+
+    get_average_waiting_time(processes_rr)
+
 
 
 def cmd_sjf(processes):
