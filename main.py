@@ -72,7 +72,7 @@ def get_average_waiting_time(processes):
         print(f"P{processes[i][0]}\t\t{processes[i][1]}\t\t{processes[i][2]}")
 
     print(
-        f"\nAverage Waiting Time:\t{processes_total_waiting_time} / {len(processes)} = {processes_total_waiting_time / len(processes)}",
+        f"\n\tAverage Waiting Time:\t{processes_total_waiting_time} / {len(processes)} = {processes_total_waiting_time / len(processes)}",
     )
 
 
