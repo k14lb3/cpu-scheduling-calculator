@@ -62,6 +62,8 @@ def gen_gantt_chart(processes):
 
 
 def get_average_waiting_time(processes):
+    processes.sort(key=lambda p: p[0])
+
     processes_total_waiting_time = 0
 
     for i in range(len(processes)):
