@@ -67,9 +67,14 @@ def get_average_waiting_time(processes):
     for i in range(len(processes)):
         processes_total_waiting_time += processes[i][2]
 
-    print("\n\nProcess\t\tBurst Time\tWaiting Time")
+    print(
+        f"\n\nProcess\t\tBurst Time\tWaiting Time\t{'Priority' if len(processes[0]) == 4 else ''}",
+    )
+
     for i in range(len(processes)):
-        print(f"P{processes[i][0]}\t\t{processes[i][1]}\t\t{processes[i][2]}")
+        print(
+            f"P{processes[i][0]}\t\t{processes[i][1]}\t\t{processes[i][2]}\t\t{processes[i][3] if len(processes[0]) == 4 else ''}"
+        )
 
     print(
         f"\n\tAverage Waiting Time:\t{processes_total_waiting_time} / {len(processes)} = {processes_total_waiting_time / len(processes)}",
@@ -77,7 +82,32 @@ def get_average_waiting_time(processes):
 
 
 def cmd_prio(processes):
-    pass
+    processes_prio = copy.deepcopy(processes)
+
+    print("\n# Lower number = Higher priority")
+
+    for i in range(len(processes_prio)):
+
+        while True:
+            priority = int(input(f"P{processes_prio[i][0]} Priority: "))
+
+            if priority > 0:
+                break
+
+            print("Invalid input.")
+
+        processes_prio[i].extend([0, priority])
+
+    processes_prio.sort(key=lambda p: p[3])
+
+    gen_gantt_chart(processes_prio)
+
+    for i in range(len(processes_prio)):
+        processes_prio[i][2] = (
+            processes_prio[i - 1][1] + processes_prio[i - 1][2] if i != 0 else 0
+        )
+
+    get_average_waiting_time(processes_prio)
 
 
 def cmd_rr(processes):
@@ -87,7 +117,7 @@ def cmd_rr(processes):
 def cmd_sjf(processes):
     processes_sjf = copy.deepcopy(processes)
 
-    processes_sjf.sort(key= lambda p:p[1])
+    processes_sjf.sort(key=lambda p: p[1])
 
     gen_gantt_chart(processes_sjf)
 
@@ -97,7 +127,6 @@ def cmd_sjf(processes):
         )
 
     get_average_waiting_time(processes_sjf)
-
 
 
 def cmd_fcfs(processes):
@@ -178,6 +207,7 @@ def main():
             os.system("cls" if os.name == "nt" else "clear")
         else:
             print(f"Command not found: {cmd}")
+
 
 if __name__ == "__main__":
     main()
