@@ -271,29 +271,29 @@ def main():
             if len(processes) != 0:
                 cmd_fcfs(processes)
             else:
-                print("Input processes first!")
+                print("Input processes first by using the 'proc' command.")
         elif cmd == CMD_SJF:
             if len(processes) != 0:
                 cmd_sjf(processes)
             else:
-                print("Input processes first!")
+                print("Input processes first by using the 'proc' command.")
         elif cmd == CMD_RR:
             if len(processes) != 0:
                 cmd_rr(processes)
             else:
-                print("Input processes first!")
+                print("Input processes first by using the 'proc' command.")
         elif cmd == CMD_PRIO:
             if len(processes) != 0:
                 cmd_prio(processes)
             else:
-                print("Input processes first!")
+                print("Input processes first by using the 'proc' command.")
         elif cmd == CMD_PROC:
             cmd_proc(processes)
         elif cmd == CMD_DISPROC:
             if len(processes) != 0:
                 cmd_disproc(processes)
             else:
-                print("Input processes first!")
+                print("Input processes first by using the 'proc' command.")
         elif cmd == CMD_HELP:
             cmd_help()
         elif cmd == CMD_CLEAR:
