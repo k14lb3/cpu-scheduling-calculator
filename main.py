@@ -268,29 +268,29 @@ def main():
         cmd = input("\n➡ ")
 
         if cmd == CMD_FCFS:
-            if len(processes) != 0:
+            if processes:
                 cmd_fcfs(processes)
             else:
                 print("Input processes first by using the 'proc' command.")
         elif cmd == CMD_SJF:
-            if len(processes) != 0:
+            if processes:
                 cmd_sjf(processes)
             else:
                 print("Input processes first by using the 'proc' command.")
         elif cmd == CMD_RR:
-            if len(processes) != 0:
+            if processes:
                 cmd_rr(processes)
             else:
                 print("Input processes first by using the 'proc' command.")
         elif cmd == CMD_PRIO:
-            if len(processes) != 0:
+            if processes:
                 cmd_prio(processes)
             else:
                 print("Input processes first by using the 'proc' command.")
         elif cmd == CMD_PROC:
             cmd_proc(processes)
         elif cmd == CMD_DISPROC:
-            if len(processes) != 0:
+            if processes:
                 cmd_disproc(processes)
             else:
                 print("Input processes first by using the 'proc' command.")
