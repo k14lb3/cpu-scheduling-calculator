@@ -10,6 +10,7 @@ CMD_PROC = "proc"
 CMD_DISPROC = "disproc"
 CMD_HELP = "help"
 CMD_CLEAR = "clear"
+CMD_EXIT = "exit"
 COMMANDS = {
     CMD_FCFS: "Apply First-Come First-Served Scheduling.",
     CMD_SJF: "Apply Shortest-Job-First Scheduling.",
@@ -19,6 +20,7 @@ COMMANDS = {
     CMD_DISPROC: "Display the processes.",
     CMD_HELP: "Display commands.",
     CMD_CLEAR: "Clears the terminal.",
+    CMD_EXIT: "Exits the program.",
 }
 
 
@@ -296,6 +298,8 @@ def main():
             cmd_help()
         elif cmd == CMD_CLEAR:
             os.system("cls" if os.name == "nt" else "clear")
+        elif cmd == CMD_EXIT:
+            return
         else:
             print(f"Command not found: {cmd}")
 
