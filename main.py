@@ -87,7 +87,7 @@ def get_average_waiting_time(processes):
 def cmd_prio(processes):
     processes_prio = copy.deepcopy(processes)
 
-    print("\n# Lower number = Higher priority")
+    print("# Lower number = Higher priority")
 
     for i in range(len(processes_prio)):
 
@@ -128,7 +128,7 @@ def cmd_rr(processes):
             break
 
         print("Invalid input.")
-
+    
     # Gets the number of iterations by getting the
     # largest burst time and dividing it to the given time quantum.
     iterations = ceil(max(burst_times) / time_quantum)
@@ -164,7 +164,7 @@ def cmd_rr(processes):
             # Determines if the process that the cursor is currently in
             # is the one that we are calculating the waiting time for.
             if processes_rr_temp[j][0] == processes_rr[i][0]:
-                # Determines if the process is its first execution. 
+                # Determines if the process is its first execution.
                 if encounter != 0:
                     # Gets the time gap between the n and n+1 process
                     # Time gap = Current n process Waiting Time -
@@ -182,7 +182,6 @@ def cmd_rr(processes):
         processes_rr[i].append(waiting_time)
 
     get_average_waiting_time(processes_rr)
-
 
 
 def cmd_sjf(processes):
@@ -216,10 +215,31 @@ def cmd_fcfs(processes):
 def cmd_proc(processes):
     processes.clear()
 
-    process_count = int(input("\nInput number of processes: "))
+    process_count = None
+
+    while True:
+        process_count = input("Input number of processes: ")
+
+        if process_count.isnumeric():
+            process_count = int(process_count)
+            break
+
+        print("Invalid input.")
 
     for i in range(process_count):
-        processes.append([i + 1, int(input(f"P{i + 1} Burst Time: "))])
+        while True:
+            burst_time = input(f"P{i + 1} Burst Time: ")
+
+            if burst_time.isnumeric():
+                burst_time = int(burst_time)
+
+                if burst_time > 0:
+                    burst_time = int(burst_time)
+                    break
+
+            print("Invalid input.")
+
+        processes.append([i + 1, burst_time])
 
     cmd_disproc(processes)
 
@@ -231,7 +251,7 @@ def cmd_disproc(processes):
 
 
 def cmd_help():
-    print("\nCommands:")
+    print("Commands:")
     for cmd, func in COMMANDS.items():
         print(f"{cmd}\t-\t{func}")
 
